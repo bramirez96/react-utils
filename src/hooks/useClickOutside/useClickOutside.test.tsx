@@ -46,7 +46,8 @@ describe('useClickOutside', () => {
     expect(spy).toHaveBeenCalledTimes(0);
 
     // Throw this error as it should never be thrown unless we break tests
-    if (!returnObj[0].current) throw 'Error! Hook did not return a valid ref';
+    if (!returnObj[0].current)
+      throw new Error('Error! Hook did not return a valid ref');
     // Click the element
     fireEvent.mouseDown(returnObj[0].current);
     // The spy should not have been called, as we're stopping propagation
