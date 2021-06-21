@@ -1,6 +1,6 @@
 {
   "name": "@story-squad/react-utils",
-  "version": "0.0.2",
+  "version": "0.0.21",
   "description": "A collection of helpful React utilities to speed up development and increase code consistency.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
