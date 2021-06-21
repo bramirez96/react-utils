@@ -41,7 +41,7 @@ describe('<ErrorBoundary />', () => {
   it('renders the fallback when an error is thrown', () => {
     // Mock console.error temporarily to keep our console clean
     const spy = jest.spyOn(console, 'error');
-    spy.mockImplementation(() => {});
+    spy.mockImplementation(() => null);
 
     const { queryByText } = render(
       <ErrorBoundary fallback={ErrorFallbackExample}>
