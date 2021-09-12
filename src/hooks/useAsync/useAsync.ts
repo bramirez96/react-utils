@@ -1,11 +1,13 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState } from 'react';
 
 export default function useAsync<FunctionReturn, Params extends unknown[]>({
   asyncFunction,
   setter,
+  errorHandler,
 }: {
   asyncFunction: (...params: Params) => Promise<FunctionReturn>;
   setter?: (newValue: FunctionReturn) => void;
+  errorHandler?: (err: unknown) => void;
 }): [
   execute: (...params: Params) => Promise<void>,
   loading: boolean,
@@ -17,6 +19,7 @@ export default function useAsync<FunctionReturn, Params extends unknown[]>({
   const [error, setError] = useState<Error>();
 
   const updateState = setter ?? setValue;
+  const handleError = errorHandler ?? setError;
 
   const execute = useCallback(
     async (...params: Params) => {
@@ -25,7 +28,7 @@ export default function useAsync<FunctionReturn, Params extends unknown[]>({
         const response = await asyncFunction(...params);
         updateState(response);
       } catch (err) {
-        setError(err);
+        handleError(err);
       } finally {
         setLoading(false);
       }
