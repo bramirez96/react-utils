@@ -1,12 +1,12 @@
-import { IClassnamesArgs } from './classnames.model';
+import { IClassnamesArgs } from "./classnames.model";
 
 const classnames = (...args: IClassnamesArgs[]) => {
-  let response = '';
+  let response = "";
 
   args.forEach((arg) => {
-    if (typeof arg === 'string' || typeof arg === 'number') {
+    if (typeof arg === "string" || typeof arg === "number") {
       response += `${arg} `;
-    } else if (typeof arg === 'object' && arg !== null) {
+    } else if (typeof arg === "object" && arg !== null) {
       // Arg is an object, let's get its values and filter them
       const argMap = Object.entries(arg);
       const filteredArgMap = argMap
@@ -16,12 +16,12 @@ const classnames = (...args: IClassnamesArgs[]) => {
       // Recursively call the function to add names from object class maps
       const recursiveResponse = classnames(...filteredArgMap);
       // Add the recursively calculated names to the calculated classname string
-      response += recursiveResponse + ' ';
+      response += recursiveResponse + " ";
     }
   });
 
   // Filter out excess spaces
-  response = response.replace(/\s+/g, ' ').trim();
+  response = response.replace(/\s+/g, " ").trim();
 
   return response;
 };
