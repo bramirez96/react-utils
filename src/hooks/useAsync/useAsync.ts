@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from "react";
 
 export default function useAsync<FunctionReturn, Params extends unknown[]>({
   asyncFunction,
