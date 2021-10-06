@@ -21,9 +21,9 @@ function setupWithSetter(param: Parameters<typeof useAsync>[0]) {
       returnVal,
       useAsync({
         ...param,
-        setter: (setState as unknown) as Parameters<
+        onSuccess: setState as unknown as Parameters<
           typeof useAsync
-        >[0]['setter'],
+        >[0]['onSuccess'],
       })
     );
     // Cast the state value as the returned state value from the hook
