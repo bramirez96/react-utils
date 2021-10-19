@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState } from 'react';
 
 export default function useAsync<FunctionReturn, Params extends unknown[]>({
   asyncFunction,
@@ -7,16 +7,18 @@ export default function useAsync<FunctionReturn, Params extends unknown[]>({
 }: {
   asyncFunction: (...params: Params) => Promise<FunctionReturn>;
   onSuccess?: (newValue: FunctionReturn) => void | Promise<void>;
-  onError?: (err: unknown) => void | Promise<void>;
+  onError?: (
+    err: unknown
+  ) => void | ErrorWithBody | Promise<void | ErrorWithBody>;
 }): [
   execute: (...params: Params) => Promise<void>,
   loading: boolean,
   response: FunctionReturn | undefined,
-  error: Error | undefined
+  error: ErrorWithBody | undefined
 ] {
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState<FunctionReturn>();
-  const [error, setError] = useState<Error>();
+  const [errorState, setErrorState] = useState<ErrorWithBody>();
 
   const execute = useCallback(
     async (...params: Params) => {
@@ -25,9 +27,9 @@ export default function useAsync<FunctionReturn, Params extends unknown[]>({
         const response = await asyncFunction(...params);
         await onSuccess?.(response);
         setValue(response);
-      } catch (err) {
-        await onError?.(err);
-        setError(err);
+      } catch (error) {
+        const onErrResponse = await onError?.(error);
+        setErrorState(onErrResponse ?? error);
       } finally {
         setLoading(false);
       }
@@ -35,5 +37,7 @@ export default function useAsync<FunctionReturn, Params extends unknown[]>({
     [asyncFunction]
   );
 
-  return [execute, loading, value, error];
+  return [execute, loading, value, errorState];
 }
+
+type ErrorWithBody = Error & { body?: Record<string, unknown> };
