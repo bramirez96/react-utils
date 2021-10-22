@@ -29,7 +29,7 @@ export default function useAsync<FunctionReturn, Params extends unknown[]>({
         setValue(response);
       } catch (error) {
         const onErrResponse = await onError?.(error);
-        setErrorState(onErrResponse ?? error);
+        setErrorState(onErrResponse ?? (error as ErrorWithBody));
       } finally {
         setLoading(false);
       }

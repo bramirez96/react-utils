@@ -1,4 +1,4 @@
-import { MutableRefObject, useCallback, useEffect, useRef } from 'react';
+import { MutableRefObject, useCallback, useEffect, useRef } from "react";
 
 const useClickOutside = <ElementType extends HTMLElement = HTMLDivElement>({
   isActive = true,
@@ -13,12 +13,12 @@ const useClickOutside = <ElementType extends HTMLElement = HTMLDivElement>({
 
   useEffect(() => {
     if (isActive) {
-      document.addEventListener('mousedown', onClick);
-      document.addEventListener('touchstart', onClick);
+      document.addEventListener("mousedown", onClick);
+      document.addEventListener("touchstart", onClick);
 
       return () => {
-        document.removeEventListener('mousedown', onClick);
-        document.removeEventListener('touchstart', onClick);
+        document.removeEventListener("mousedown", onClick);
+        document.removeEventListener("touchstart", onClick);
       };
     }
   }, [isActive, onClick]);
@@ -26,12 +26,12 @@ const useClickOutside = <ElementType extends HTMLElement = HTMLDivElement>({
   useEffect(() => {
     if (componentRef && componentRef.current) {
       const place = componentRef.current;
-      place.addEventListener('mousedown', preventClick);
-      place.addEventListener('touchstart', preventClick);
+      place.addEventListener("mousedown", preventClick);
+      place.addEventListener("touchstart", preventClick);
 
       return () => {
-        place.removeEventListener('mousedown', preventClick);
-        place.removeEventListener('touchstart', preventClick);
+        place.removeEventListener("mousedown", preventClick);
+        place.removeEventListener("touchstart", preventClick);
       };
     }
   }, [componentRef, componentRef.current, preventClick]);
