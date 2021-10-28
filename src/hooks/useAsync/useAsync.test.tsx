@@ -37,7 +37,7 @@ function setupWithSetter(param: Parameters<typeof useAsync>[0]) {
 describe('useAsync', () => {
   it('returns a correct array', async () => {
     const returnObj = setup({
-      asyncFunction: async () => null,
+      run: async () => null,
     });
 
     // Expect a an array with length 4
@@ -67,7 +67,7 @@ describe('useAsync', () => {
   it('correctly throws an error from the async callback', async () => {
     const ERROR_MSG = 'error message';
     const returnObj = setup({
-      asyncFunction: async () => {
+      run: async () => {
         throw new Error(ERROR_MSG);
       },
     });
@@ -100,7 +100,7 @@ describe('useAsync', () => {
     // Initialize a spy for our onClick
     const spy = jest.fn(async () => Promise.resolve(true));
     const returnObj = setupWithSetter({
-      asyncFunction: spy,
+      run: spy,
     });
 
     // Sanity check to make sure we haven't called the spy yet

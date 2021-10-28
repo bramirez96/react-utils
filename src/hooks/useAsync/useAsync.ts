@@ -1,11 +1,11 @@
 import { useCallback, useState } from "react";
 
 export default function useAsync<FunctionReturn, Params extends unknown[]>({
-  asyncFunction,
+  run,
   onSuccess,
   onError,
 }: {
-  asyncFunction: (...params: Params) => Promise<FunctionReturn>;
+  run: (...params: Params) => FunctionReturn | Promise<FunctionReturn>;
   onSuccess?: (newValue: FunctionReturn) => void | Promise<void>;
   onError?: (
     err: unknown
@@ -24,17 +24,21 @@ export default function useAsync<FunctionReturn, Params extends unknown[]>({
     async (...params: Params) => {
       try {
         setLoading(true);
-        const response = await asyncFunction(...params);
-        await onSuccess?.(response);
+
+        // Run the function
+        const response = await run(...params);
         setValue(response);
+        setLoading(false);
+
+        // Run onSuccess AFTER setting value and loading state
+        await onSuccess?.(response);
       } catch (error) {
         const onErrResponse = await onError?.(error);
         setErrorState(onErrResponse ?? (error as ErrorWithBody));
-      } finally {
         setLoading(false);
       }
     },
-    [asyncFunction]
+    [run, onError, onSuccess]
   );
 
   return [execute, loading, value, errorState];
