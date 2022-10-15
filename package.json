@@ -1,5 +1,5 @@
 {
-  "name": "@story-squad/react-utils",
+  "name": "@bramirez96/react-utils",
   "version": "0.1.0",
   "description": "A collection of helpful React utilities to speed up development and increase code consistency.",
   "main": "./dist/index.js",
@@ -18,14 +18,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/story-squad/react-utils.git"
+    "url": "git+https://github.com/bramirez96/react-utils.git"
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/story-squad/react-utils/issues"
+    "url": "https://github.com/bramirez96/react-utils/issues"
   },
-  "homepage": "https://github.com/story-squad/react-utils#readme",
+  "homepage": "https://github.com/bramirez96/react-utils#readme",
   "dependencies": {
+    "npmrc": "^1.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
