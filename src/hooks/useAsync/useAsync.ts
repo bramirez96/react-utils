@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState } from 'react';
 
 export default function useAsync<FunctionReturn, Params extends unknown[]>({
   asyncFunction,
@@ -27,7 +27,7 @@ export default function useAsync<FunctionReturn, Params extends unknown[]>({
         setValue(response);
       } catch (err) {
         await onError?.(err);
-        setError(err);
+        setError(err as Error);
       } finally {
         setLoading(false);
       }
